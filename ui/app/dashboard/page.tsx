@@ -63,7 +63,7 @@ export default function DashboardPage() {
     };
 
     fetchUrls();
-  }, [page]);
+  }, [page, router]);
 
   const handleSlugSave = async (id: number) => {
     try {

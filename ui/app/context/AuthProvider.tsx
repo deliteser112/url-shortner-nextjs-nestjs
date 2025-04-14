@@ -15,6 +15,12 @@ type AuthContextType = {
   logout: () => void
 }
 
+type DecodedToken = {
+  id: string;
+  email: string;
+  exp: number;
+};
+
 const AuthContext = createContext<AuthContextType>({
   user: null,
   isAuthenticated: false,
@@ -31,8 +37,8 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
     if (token) {
       try {
-        const decoded: any = jwtDecode(token)
-        setUser({ id: decoded.id, email: decoded.email })
+        const { id, email } = jwtDecode<DecodedToken>(token);
+        setUser({ id, email })
       } catch (err) {
         console.error('Invalid token', err)
         removeToken()

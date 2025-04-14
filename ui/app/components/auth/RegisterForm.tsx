@@ -40,8 +40,12 @@ export default function RegisterForm() {
       setTimeout(() => {
         router.push('/login')
       }, 1500)
-    } catch (err: any) {
-      setError(err.message || 'Registration failed')
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message || 'Registration failed');
+      } else {
+        setError('Registration failed');
+      }
     } finally {
       setLoading(false)
     }

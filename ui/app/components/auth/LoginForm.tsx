@@ -31,8 +31,12 @@ export default function LoginForm() {
       const { token } = await login(email, password)
       setToken(token)
       router.push('/dashboard')
-    } catch (err: any) {
-      setError(err.message || 'Login failed')
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message || 'Login failed');
+      } else {
+        setError('Login failed');
+      }
     } finally {
       setLoading(false)
     }
@@ -95,7 +99,7 @@ export default function LoginForm() {
         onClick={() => router.push('/register')}
         className="mt-4 w-full text-sm text-blue-600 hover:underline text-center"
       >
-        Don't have an account? Register
+        Don&apos;t have an account? Register
       </button>
     </div>
   )

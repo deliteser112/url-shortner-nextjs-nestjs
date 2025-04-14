@@ -30,12 +30,26 @@ export default function URLForm() {
       const fullShortUrl = `${origin}/${slug}`
       setShortUrl(fullShortUrl)
       setUrl('')
-    } catch (err: any) {
-      if (err?.response?.status === 429 || err.message?.includes('Too many requests')) {
-        setErrorMessage('You are submitting too quickly. Please wait a moment and try again.')
-      } else {
-        setErrorMessage(err.message || 'Failed to shorten URL')
+    } catch (err) {
+      let message = 'Failed to shorten URL';
+
+      if (err instanceof Error) {
+        if ('message' in err && err.message.includes('Too many requests')) {
+          message = 'You are submitting too quickly. Please wait a moment and try again.';
+        } else {
+          message = err.message;
+        }
+      } else if (
+        typeof err === 'object' &&
+        err !== null &&
+        'response' in err &&
+        typeof (err as { response?: { status?: number } }).response?.status === 'number' &&
+        (err as { response?: { status?: number } }).response?.status === 429
+      ) {
+        message = 'You are submitting too quickly. Please wait a moment and try again.';
       }
+
+      setErrorMessage(message);
     } finally {
       setLoading(false)
     }
@@ -75,7 +89,7 @@ export default function URLForm() {
         <div className="bg-gray-50 border border-gray-200 rounded-md p-4 mt-2 flex justify-between items-center">
           <div>
             <p className="text-sm font-medium text-green-600 mb-1">
-              Success! Here's your short URL:
+              Success! Here&apos;s your short URL:
             </p>
             <a
               href={shortUrl}
