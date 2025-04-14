@@ -8,6 +8,8 @@ This project is a modern, full-stack **URL Shortener** built using:
 - 🐘 **Database**: PostgreSQL
 - 🐳 Fully containerized using Docker & Docker Compose
 
+    
+    Should be able to check it [here](https://www.loom.com/share/01709ba10b6344fea1706e78f8808d08?sid=29a6bc62-76af-4f0c-b1b6-af9d679e7f4d)
 ---
 
 ## 🗂️ Project Structure
