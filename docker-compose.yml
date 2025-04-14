@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./api
+    container_name: nest-backend
+    ports:
+      - '4000:4000'
+    env_file:
+      - ./api/.env
+    depends_on:
+      - db
+    networks:
+      - shortner-net
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./ui
+    container_name: next-frontend
+    ports:
+      - '3000:3000'
+    env_file:
+      - ./ui/.env.local
+    depends_on:
+      - backend
+    networks:
+      - shortner-net
+    restart: unless-stopped
+
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: urlshortener
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - shortner-net
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+
+networks:
+  shortner-net:
+    driver: bridge
