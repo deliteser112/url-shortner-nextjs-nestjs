@@ -113,6 +113,10 @@ docker-compose up --build
   NEXT_PUBLIC_API_URL=http://localhost:4000
   ```
 
+  ![1](https://github.com/user-attachments/assets/e13ba0da-8b37-49df-8029-98f738988433)
+
+  ![2](https://github.com/user-attachments/assets/cc40ac1e-2772-4eb5-8c9f-33a524fc46c2)
+
 ---
 
 ## ✅ Available Scripts
